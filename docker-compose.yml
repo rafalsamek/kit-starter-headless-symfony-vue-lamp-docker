@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
-    container_name: payments_backend
+    container_name: kit-starter-headless-symfony-vue-lamp-docker_backend
     restart: always
     ports:
       - "8000:80"
@@ -22,14 +22,14 @@ services:
     build:
       context: .
       dockerfile: ./docker/mysql/Dockerfile
-    container_name: payments_mysql
+    container_name: kit-starter-headless-symfony-vue-lamp-docker_mysql
     restart: always
     ports:
       - "3306:3306"
     command: --default-authentication-plugin=mysql_native_password --sql-mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
     hostname: mysql
     volumes:
-      - payments_db_data:/var/lib/mysql
+      - kit-starter-headless-symfony-vue-lamp-docker_db_data:/var/lib/mysql
       - ./docker/mysql/conf/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/dump:/docker-entrypoint-initdb.d
     environment:
@@ -42,7 +42,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: payments_phpmyadmin
+    container_name: kit-starter-headless-symfony-vue-lamp-docker_phpmyadmin
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
@@ -59,12 +59,12 @@ services:
     build:
       context: .
       dockerfile: ./docker/frontend/Dockerfile
-    container_name: payments_frontend
+    container_name: kit-starter-headless-symfony-vue-lamp-docker_frontend
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "8081:8080"
+      - "80:8080"
     networks:
       - network
 
@@ -72,5 +72,5 @@ networks:
   network:
 
 volumes:
-  payments_db_data:
-    name: payments_db_data
+  kit-starter-headless-symfony-vue-lamp-docker_db_data:
+    name: kit-starter-headless-symfony-vue-lamp-docker_db_data
